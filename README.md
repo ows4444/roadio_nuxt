@@ -19,3 +19,4 @@ $ npm start
 $ npm run generate
 ```
 # roadio_nuxt
+$ 'https://blog.morizyun.com/javascript/typescript-tutorial-nuxt-firebase-bulma-navbar-vue.html'
