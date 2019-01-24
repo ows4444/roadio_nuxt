@@ -9,6 +9,8 @@
       <h2 class="subtitle">
         My divine Nuxt.js project
       </h2>
+      <vuetable :fields="fields" />
+      <vuetable-pagination ref="pagination" />
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -22,28 +24,38 @@
           target="_blank"
           class="button--grey"
         >
-          GitHub ={{ sd.name }}
+          GitHub ={{ sd.name }} time {{ now }}
         </a>
       </div>
     </div>
   </section>
 </template>
 
+
 <script>
 import Logo from '~/components/Logo.vue'
+import moment from 'moment'
 import { db } from '~/plugins/firebase.js'
+import { Vuetable, VuetablePagination } from 'vuetable-2'
 export default {
   components: {
-    Logo
+    Logo,
+    Vuetable,
+    VuetablePagination
   },
   data() {
     return {
       database: db,
-      sd: ''
+      sd: '',
+      fields: ['name'],
+      now: ''
     }
   },
   async created() {
     await this.database.ref('/users').set({ name: 'Ows' })
+    setInterval(() => {
+      this.now = moment().format('hh:mm:ss a')
+    }, 1000)
     const snap = await this.database.ref('/users').once('value')
     this.sd = snap.val()
   }
