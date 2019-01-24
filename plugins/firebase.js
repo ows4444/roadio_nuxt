@@ -1,4 +1,5 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/database'
 const config = {
   apiKey: process.env.FIREBASE_CLIENT_API_KEY,
   authDomain: process.env.FIREBASE_CLIENT_AUTH_DOMAIN,
@@ -7,8 +8,8 @@ const config = {
   projectId: process.env.FIREBASE_CLIENT_PROJECT_ID,
   storageBucket: process.env.FIREBASE_CLIENT_STORAGE_BUCKET
 }
-module.exports = {
-  firebase: !firebase.apps.length
-    ? firebase.initializeApp(config)
-    : firebase.app()
-}
+export default (!firebase.apps.length
+  ? firebase.initializeApp(config)
+  : firebase.app())
+
+export const db = firebase.database()

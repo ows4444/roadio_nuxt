@@ -1,3 +1,4 @@
+
 <template>
   <section class="container">
     <div>
@@ -21,7 +22,7 @@
           target="_blank"
           class="button--grey"
         >
-          GitHub
+          GitHub ={{ sd.name }}
         </a>
       </div>
     </div>
@@ -30,10 +31,21 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-
+import { db } from '~/plugins/firebase.js'
 export default {
   components: {
     Logo
+  },
+  data() {
+    return {
+      database: db,
+      sd: ''
+    }
+  },
+  async created() {
+    await this.database.ref('/users').set({ name: 'Ows' })
+    const snap = await this.database.ref('/users').once('value')
+    this.sd = snap.val()
   }
 }
 </script>
